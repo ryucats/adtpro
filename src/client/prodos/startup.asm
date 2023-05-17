@@ -145,7 +145,8 @@ AudioLineEnd:
 	.byte $8d
 EthernetRow = ROW3;
 EthernetLine:
-	asc "(E)THERNET  : UTHERNET/II OR LANCEGS"
+;	asc "(E)THERNET  : UTHERNET/II OR LANCEGS"
+	asc "(E)THERNET  : DANII CONTROLLER"
 EthernetLineEnd:
 	.byte $8d
 QuitRow = ROW4;

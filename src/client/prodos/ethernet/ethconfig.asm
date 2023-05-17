@@ -26,6 +26,8 @@
 	.export cfg_tftp_server
 	.export cfg_mac
 
+DAN_DEFAULT_SLOT := (7-1) ; zero based: 6=slot7
+
 ;---------------------------------------------------------
 ; CONFIG - ADTPro Configuration
 ;---------------------------------------------------------
@@ -353,11 +355,11 @@ ENDVAL:	dex
 ; FindSlot - Find an uther card
 ;---------------------------------------------------------
 FindSlot:
-	ldx #$00	; Slot number - start at min and work up
+	ldx #$07	; Slot number - start at max and work down
 FindSlotLoop:
+        txa		; One-indexed slot number for a2_set_slot
+        dex
 	stx TempSlot
-	inx		; One-indexed slot number for a2_set_slot
-	txa
 	jsr DisqualifyCards
 	bcs Bump
 	jsr ip65_init
@@ -365,8 +367,6 @@ FindSlotLoop:
 	bcc FoundSlot
 Bump:
 	clc
-	inx
-	cpx #MAXSLOT
 	bne FindSlotLoop
 	rts
 FoundSlot:
@@ -443,7 +443,7 @@ YSAVE:	.byte $00
 
 PARMS:
 COMMSLOT:
-	.byte 2		; Zero-indexed comms slot (3)
+	.byte DAN_DEFAULT_SLOT ; Zero-indexed comms slot (7)
 PBAO:	.byte 0		; Blocks at once (1)
 PSOUND:	.byte 0		; Sounds? (YES)
 PNIBBL:	.byte 1		; Enable nibbles? (NO)
@@ -456,7 +456,7 @@ cfg_ip:		.byte   0,   0,   0,   0 ; ip address of local machine (will be overwri
 cfg_netmask:	.byte   0,   0,   0,   0 ; netmask of local network (will be overwritten if dhcp_init is called)
 cfg_gateway:	.byte   0,   0,   0,   0 ; ip address of router on local network (will be overwritten if dhcp_init is called)
 
-DEFAULT:	.byte 2,0,0,1,1,0	; Default parm indices
+DEFAULT:	.byte DAN_DEFAULT_SLOT,0,0,1,1,0	; Default parm indices
 CONFIGYET:	.byte 0			; Has the user configged yet?
 PARMSEND:
 cfg_dns:	.byte   0,   0,   0,   0 ; ip address of dns server to use (will be overwritten if dhcp_init is called)

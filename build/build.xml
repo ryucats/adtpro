@@ -50,7 +50,7 @@ all
 -->
 
 <project name="ADTPro" default="all" basedir="..">
-	<property name="versionString" value="v.r.m" />
+	<property name="versionString" value="2.1.D2" />
 	<property name="projdir" value="${basedir}" />
 	<property name="srcdir" value="${basedir}/src" />
 	<property name="destdir" value="${basedir}/dest" />
@@ -78,7 +78,7 @@ all
 	<property name="slf4jVersion" value="1.7.36" />
 	<property name="slf4jJar" value="slf4j-nop-${slf4jVersion}.jar" />
 	<property name="slf4jJarPath" value="${builddir}/lib/jssc" />
-	<property name="ip65lib" value="${builddir}/lib/ip65/ip65.lib ${builddir}/lib/ip65/a2combo.lib ${builddir}/lib/cc65/apple2.lib" />
+	<property name="ip65lib" value="${builddir}/lib/ip65/ip65.lib ${builddir}/lib/ip65/a2dan2.lib ${builddir}/lib/cc65/apple2.lib" />
 	<property name="ip65u2lib" value="${builddir}/lib/ip65/ip65.lib ${builddir}/lib/ip65/a2uther2.lib ${builddir}/lib/cc65/apple2.lib" />
 	<property name="dmgmegabytes" value="9" />
 	<!-- classes.com.webcodepro.applecommander.ui.AntTask -->

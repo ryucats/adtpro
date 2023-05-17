@@ -7,5 +7,7 @@
 mkdir lib/ip65/inc 2> /dev/null
 cp ../../ip65/inc/* lib/ip65/inc
 cp ../../ip65/ip65.lib lib/ip65/ip65.lib
+cp ../../ip65/ip65_apple2_dan2.lib lib/ip65/ip65_apple2_dan2.lib
 cp ../../ip65/drivers/a2combo.lib lib/ip65/a2combo.lib
 cp ../../ip65/drivers/a2uther2.lib lib/ip65/a2uther2.lib
+cp ../../ip65/drivers/a2dan2.lib lib/ip65/a2dan2.lib
