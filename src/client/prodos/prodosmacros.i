@@ -91,6 +91,57 @@
 	jsr COUT
 .endmacro
 
+.macro ACCEL_DISABLE
+        lda PACCEL
+        beq AD_EXIT
+        cmp #1          ; ZipChip?
+        bne :+
+
+        lda #$5a
+        sta $c05a
+        sta $c05a
+        sta $c05a
+        sta $c05a       ; Unlock ZipChip
+        lda #$00
+        sta $c05a       ; Disable ZipChip
+        beq AD_EXIT
+
+:       cmp #2          ; TransWarp?
+        bne :+
+
+        lda #$01
+        sta $C074       ; Disable TransWarp
+        bne AD_EXIT
+
+:       cmp #3
+        bne AD_EXIT
+        sta $C05D       ; Slow down UltraWarp
+AD_EXIT:
+.endmacro
+
+.macro ACCEL_ENABLE
+        lda PACCEL
+        beq AE_EXIT
+        cmp #1          ; ZipChip?
+        bne :+
+        lda #$00
+        sta $c05b       ; Enable ZipChip
+        lda #$a5
+        sta $c05a       ; Lock ZipChip
+        bne AE_EXIT
+
+:       cmp #2          ; TransWarp?
+        bne :+
+        lda #$00        ; Enable TransWarp
+        sta $C074
+        beq AE_EXIT
+
+:       cmp #3          ; TransWarp?
+        bne AE_EXIT
+        sta $C05C       ; Speed up UltraWarp
+AE_EXIT:
+.endmacro
+
 .define	INV_BLOCK $20	; ASCII for an inverse space - is differernt on SOS
 .define	INV_CHR_L $0C	; ASCII for an inverse "L" character
 .define	NRM_BLOCK $A0	; ASCII for a normal space - is different on SOS

@@ -88,3 +88,10 @@
 	lda USER_Z_REG
 	sta Z_REG		; Restore zero page
 .endmacro
+
+.macro ACCEL_DISABLE
+    ; do Apple III accelerators exist?
+.endmacro
+
+.macro ACCEL_ENABLE
+.endmacro

@@ -308,6 +308,10 @@ PHMMAX	= $0a		; This must be two greater than the largest host message
 		asc "BLOCKS AT ONCE"
 	MBlocksAtOnce_END =*
 
+        MAccelerator:
+                asc "ACCELERATOR"
+        MAccelerator_END =*
+
 	MNULL:	.byte $00
 	MNULL_END =*
 
@@ -325,7 +329,7 @@ MSGTBL:
 	.addr MLOGO1,MLOGO2,MLOGO3,MLOGO4,MLOGO5,MLOGO6,MWAIT,MCDIR,MFORC,MFEX
 	.addr MUTHBAD, MPREFIX, MINSERTDISK, MFORMAT, MANALYSIS, MNOCREATE
 	.addr MVolName, MTheOld, MUnRecog, MDead
-	.addr MProtect, MNoDisk, MNuther, MUnitNone, MNIBTOP, MEnableNibbles,MBlocksAtOnce
+	.addr MProtect, MNoDisk, MNuther, MUnitNone, MNIBTOP, MEnableNibbles, MBlocksAtOnce, MAccelerator
 	.addr MNULL
 
 ;---------------------------------------------------------
@@ -394,6 +398,7 @@ MSGLENTBL:
 	.byte MNIBTOP_END-MNIBTOP
 	.byte MEnableNibbles_END-MEnableNibbles
 	.byte MBlocksAtOnce_END-MBlocksAtOnce
+        .byte MAccelerator_END-MAccelerator
 	.byte $00	; MNULL - null message has no length.
 
 ;---------------------------------------------------------
@@ -461,4 +466,5 @@ PMUnitNone	= $02+PMNuther
 PMNIBTOP	= $02+PMUnitNone
 PMEnableNibbles	= $02+PMNIBTOP
 PMBlocksAtonce	= $02+PMEnableNibbles
-PMNULL		= $02+PMBlocksAtonce
+PMAccelerator   = $02+PMBlocksAtonce
+PMNULL		= $02+PMAccelerator

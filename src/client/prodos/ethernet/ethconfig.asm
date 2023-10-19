@@ -25,6 +25,7 @@
 	.export dhcp_server
 	.export cfg_tftp_server
 	.export cfg_mac
+        .export PACCEL
 
 ;---------------------------------------------------------
 ; CONFIG - ADTPro Configuration
@@ -91,34 +92,40 @@ SAVPARM:
 	ldy #PMSG27	; 'DHCP CONFIGURATION'
 	jsr WRITEMSG
 
+        ldx #$05        ; Column
+        ldy #$09        ; Row
+        jsr GOTOXY
+        ldy #PMAccelerator; 'ACCELERATOR'
+        jsr WRITEMSG
+	
 	ldx #$05
-	ldy #$0a
+	ldy #$0b
 	jsr GOTOXY
 	ldax #IPMsg01
 	ldy IP_MSG_LEN_TBL
 	jsr IPShowMsg	; 'SERVER IP ADDR'
 
 	ldx #$05
-	ldy #$0b
+	ldy #$0c
 	jsr GOTOXY
 	ldax #IPMsg02
 	ldy IP_MSG_LEN_TBL+1
 	jsr IPShowMsg	; 'LOCAL IP ADDR'
 	
 	ldx #$05
-	ldy #$0c
+	ldy #$0d
 	jsr GOTOXY
 	ldax #IPMsg03
 	ldy IP_MSG_LEN_TBL+2
 	jsr IPShowMsg	; 'NETMASK'
 	
 	ldx #$05
-	ldy #$0d
+	ldy #$0e
 	jsr GOTOXY
 	ldax #IPMsg04
 	ldy IP_MSG_LEN_TBL+3
 	jsr IPShowMsg	; 'GATEWAY ADDR'
-	
+
 	ldx #$04	; Column
 	ldy #$14	; Row
 	jsr GOTOXY
@@ -409,13 +416,13 @@ DisqualifyDone:
 ; Configuration
 ;---------------------------------------------------------
 
-PARMNUM	= $06		; Number of configurable parms
+PARMNUM	= $07		; Number of configurable parms
 ;			; Note - add bytes to OLDPARM if this is expanded.
-PARMSIZ: .byte 7,2,2,2,2,2	; Number of options for each parm
+PARMSIZ: .byte 7,2,2,2,2,2,4	        ; Number of options for each parm
 LINECNT:	.byte 00		; CURRENT LINE NUMBER
 CURPARM:	.byte 00		; ACTIVE PARAMETER
 CURVAL:		.byte 00		; VALUE OF ACTIVE PARAMETER
-OLDPARM:	.res PARMNUM,$00		; There must be PARMNUM bytes here...
+OLDPARM:	.res PARMNUM,$00	; There must be PARMNUM bytes here...
 
 PARMTXT:
 	ascz "1"
@@ -435,6 +442,10 @@ PARMTXT:
 	ascz "NO"
 	ascz "YES"
 	ascz "NO"
+        ascz "NONE"
+        ascz "ZIP CHIP"
+        ascz "TRANSWARP"
+        ascz "ULTRAWARP"
 
 CONFIG_FILE_NAME:	.byte 14
 			asc "ADTPROETH.CONF"
@@ -449,6 +460,7 @@ PSOUND:	.byte 0		; Sounds? (YES)
 PNIBBL:	.byte 1		; Enable nibbles? (NO)
 PSAVE:	.byte 1		; Save parms? (NO)
 PDHCP:	.byte 0		; DHCP Configuration? (YES)
+PACCEL: .byte 0         ; Accelerator support? (NONE)
 
 ip_parms:
 serverip:	.byte 192, 168,   1,  18
@@ -456,7 +468,7 @@ cfg_ip:		.byte   0,   0,   0,   0 ; ip address of local machine (will be overwri
 cfg_netmask:	.byte   0,   0,   0,   0 ; netmask of local network (will be overwritten if dhcp_init is called)
 cfg_gateway:	.byte   0,   0,   0,   0 ; ip address of router on local network (will be overwritten if dhcp_init is called)
 
-DEFAULT:	.byte 2,0,0,1,1,0	; Default parm indices
+DEFAULT:	.byte 2,0,0,1,1,0,0	; Default parm indices
 CONFIGYET:	.byte 0			; Has the user configged yet?
 PARMSEND:
 cfg_dns:	.byte   0,   0,   0,   0 ; ip address of dns server to use (will be overwritten if dhcp_init is called)
